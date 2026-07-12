@@ -1,73 +1,82 @@
 {#
+| Hanaya header — matches the Hanaya Site v3 design.
+| Top black utility bar + main header (hamburger + search, centered logo,
+| language / currency / cart). Keeps the functional Salla web components
+| (search, cart summary, user menu, localization) so the store still works.
+|
 | Variable         | Type    | Description                     |
 |------------------|---------|---------------------------------|
 | cart             | object  |                                 |
 | cart.items_count | int     |                                 |
 | cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
 #}
-{% set important_links = theme.settings.get('important_links') %}
-<header class="store-header">
-  {# Top Nav #}
-  <div class="top-navbar">
-    <div class="container flex justify-between">
-      <div class="flex-1 flex items-center gap-2">
-          {# Footer Menu #}
-          {% if important_links %}
-            <salla-menu source="footer" topnav></salla-menu>
-          {% endif %}
+<header class="hy-header">
 
-          {# Language & Currency Component #}
-          <div class="header-buttons">
-              {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-                  <salla-localization-modal show-trigger></salla-localization-modal>
-              {% endif %}
-          </div>
-
-          {# Scopes | Branches #}
-          {% if store.scope %}
-              <button class="btn--rounded-gray"
-                      onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
-                  <i class="sicon-location rtl:ml-1 ltr:mr-1"></i> {{ store.scope.name }}
-              </button>
-          {% endif %}
-
-          {# Search bar #}
-          <div class="header-search flex-1">
-            <salla-search inline oval height="36"></salla-search>
-          </div>
+  {# ── Top black utility bar ── #}
+  <div class="hy-topbar">
+    <div class="hy-topbar__inner">
+      <nav class="hy-topbar__group" aria-label="Utility">
+        <a href="{{ store.url }}/bonds">Our Story</a>
+        <span class="hy-topbar__sep" aria-hidden="true">|</span>
+        <a href="{{ store.url }}">Privacy Policy</a>
+        <span class="hy-topbar__sep" aria-hidden="true">|</span>
+        {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+          <salla-localization-modal show-trigger></salla-localization-modal>
+        {% else %}
+          <span>English</span><span class="hy-topbar__sep" aria-hidden="true">|</span><span>Saudi Riyal</span>
+        {% endif %}
+      </nav>
+      <div class="hy-topbar__group">
+        {% if store.contacts.phone %}
+          <a href="tel:{{ store.contacts.phone }}">{{ store.contacts.phone }}</a>
+          <span class="hy-topbar__sep" aria-hidden="true">|</span>
+        {% else %}
+          <a href="tel:+966505405020">+966 505 40 50 20</a>
+          <span class="hy-topbar__sep" aria-hidden="true">|</span>
+        {% endif %}
+        <a href="mailto:{{ store.contacts.email ?: 'care@hanaya.sa' }}">{{ store.contacts.email ?: 'care@hanaya.sa' }}</a>
       </div>
-
-      <salla-contacts is-header></salla-contacts>
     </div>
   </div>
 
-  {# Main Nav #}
-  <div id="mainnav" class="main-nav-container shadow-default bg-white flex items-center">
-      <div class="inner bg-inherit w-full">
-          <div class="container">
-              <div class="flex items-stretch justify-between relative">
-                  <div class="flex items-center">
-                      <a class="lg:hidden mburger mburger--collapse leading-none rtl:ml-4 ltr:mr-4" href="#mobile-menu" aria-label="Open-menu">
-                        <i class="sicon-menu text-primary text-2xl"></i>
-                      </a>
-                      <a class="navbar-brand" href="{{ store.url }}">
-                          <img fetchpriority="high" width="100%" height="100%" loading="eager" src="{{ store.logo|cdn(175) }}" alt="{{ store.name }} logo">
-                          {% if is_page('index') %}
-                            <h1 class="sr-only">{{ store.name }}</h1>
-                          {% else %}
-                            <h2 class="sr-only">{{ store.name }}</h2>
-                          {% endif %}
-                      </a>
-                      <custom-main-menu></custom-main-menu>
-                  </div>
-                  <div class="flex items-center justify-end my-2.5">
-                      <salla-user-menu avatar-only show-header show-trigger></salla-user-menu>
-                      <salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4">
-                        <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
-                      </salla-cart-summary>
-                  </div>
-              </div>
-          </div>
+  {# ── Main header ── #}
+  <div id="mainnav" class="hy-mainnav">
+    <div class="hy-mainnav__inner">
+
+      {# left: hamburger + search #}
+      <div class="hy-mainnav__left">
+        <a class="hy-burger mburger mburger--collapse" href="#mobile-menu" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </a>
+        <div class="hy-search">
+          <salla-search inline oval height="36"></salla-search>
+        </div>
       </div>
+
+      {# center: logo #}
+      <a class="hy-brand" href="{{ store.url }}" aria-label="{{ store.name }} — home">
+        {% if store.logo %}
+          <img fetchpriority="high" loading="eager" src="{{ store.logo|cdn(220) }}" alt="{{ store.name }} logo">
+        {% else %}
+          <span class="hy-brand__text">HANAYA</span>
+        {% endif %}
+        {% if is_page('index') %}
+          <h1 class="sr-only">{{ store.name }}</h1>
+        {% else %}
+          <h2 class="sr-only">{{ store.name }}</h2>
+        {% endif %}
+      </a>
+
+      {# right: language / currency / user / cart #}
+      <div class="hy-mainnav__right">
+        <span class="hy-mainnav__meta">Language: English</span>
+        <span class="hy-mainnav__meta">Currency: SAR</span>
+        <salla-user-menu avatar-only show-header show-trigger></salla-user-menu>
+        <salla-cart-summary class="hy-cart">
+          <i slot="icon" class="header-btn__icon icon sicon-shopping-bag"></i>
+        </salla-cart-summary>
+      </div>
+
+    </div>
   </div>
 </header>
