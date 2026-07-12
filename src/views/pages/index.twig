@@ -1,0 +1,160 @@
+{#
+| Variable         | Type       | Description                                                         |
+|------------------|------------|---------------------------------------------------------------------|
+| page             | object     |                                                                     |
+| page.title       | string     | *could be html                                                      |
+| page.slug        | string     | ex: "cat.show"                                                      |
+|
+| Hanaya home page — static port of the Hanaya Site v3 design.
+| Header & footer come from the Raed master layout (real Salla store
+| header / search / cart + footer). Only the home body lives here.
+| Styles: src/assets/styles/04-components/hanaya-home.scss (scoped to .hanaya-home)
+| Images: src/assets/images/hanaya/*  (referenced via the `asset` filter)
+#}
+{% extends "layouts.master" %}
+
+{% block content %}
+<div class="hanaya-home">
+
+  {# ═══════════════  Hero  ═══════════════ #}
+  <section class="hy-hero">
+    <img class="hy-hero__img" src="{{ 'images/hanaya/hero.jpg' | asset }}" alt="" aria-hidden="true">
+    <div class="hy-hero__scrim" aria-hidden="true"></div>
+    <div class="hy-hero__content">
+      <h1>Where beauty becomes an experience</h1>
+      <p class="hy-hero__sub">Jewellery crafted with precision — carrying meaning, and leaving an unforgettable impression.</p>
+      <a class="hy-btn hy-btn--light" href="{{ store.url }}">Own your shine</a>
+    </div>
+  </section>
+
+  {# ═══════════════  Featured creations  ═══════════════ #}
+  <section class="hy-section hy-wrap">
+    <div class="hy-head">
+      <h2 class="hy-title">Featured creations</h2>
+    </div>
+    <div class="hy-feature-grid">
+      <article class="hy-product">
+        <div class="hy-product__media"><img src="{{ 'images/hanaya/product-trust-pendant.jpg' | asset }}" alt="Trust Pendant"></div>
+        <div>
+          <div class="hy-product__cat">Bonds</div>
+          <div class="hy-product__row">
+            <span class="hy-product__name">Trust Pendant</span>
+            <span class="hy-product__price">10,000 SAR</span>
+          </div>
+        </div>
+      </article>
+      <article class="hy-product">
+        <div class="hy-product__media"><img src="{{ 'images/hanaya/product-trust-ring.jpg' | asset }}" alt="Trust Ring"></div>
+        <div>
+          <div class="hy-product__cat">Cornerstone</div>
+          <div class="hy-product__row">
+            <span class="hy-product__name">Trust Ring</span>
+            <span class="hy-product__price">5,000 SAR</span>
+          </div>
+        </div>
+      </article>
+      <article class="hy-product">
+        <div class="hy-product__media"><img src="{{ 'images/hanaya/product-trust-earring.jpg' | asset }}" alt="Trust Earring"></div>
+        <div>
+          <div class="hy-product__cat">Bonds</div>
+          <div class="hy-product__row">
+            <span class="hy-product__name">Trust Earring</span>
+            <span class="hy-product__price">4,000 SAR</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  {# ═══════════════  Film band  ═══════════════ #}
+  <section class="hy-film">
+    <img class="hy-film__img" src="{{ 'images/hanaya/film-band.jpg' | asset }}" alt="" aria-hidden="true">
+    <div class="hy-film__scrim" aria-hidden="true"></div>
+    <div class="hy-film__content">
+      <div class="hy-film__eyebrow">The Hanaya film</div>
+      <h2>Where mastery meets feeling</h2>
+      <button class="hy-film__play" type="button" aria-label="Play the Hanaya film"></button>
+      <div class="hy-film__meta">Watch — 3 min · The story of HANAYA</div>
+      <a class="hy-film__link" href="{{ store.url }}">Read our story</a>
+    </div>
+  </section>
+
+  {# ═══════════════  Quote  ═══════════════ #}
+  <section class="hy-section hy-wrap hy-quote">
+    <p class="hy-quote__mark">“Beauty to be seen… craftsmanship to be discovered.”</p>
+    <p class="hy-quote__body">Hanaya designs reflect the philosophy of life itself — the deeper you look, the more their details and meanings unfold.</p>
+  </section>
+
+  {# ═══════════════  Two collections  ═══════════════ #}
+  <section class="hy-section hy-wrap hy-section--flush-top">
+    <div class="hy-head">
+      <div class="hy-eyebrow">Our collections</div>
+      <h2 class="hy-title">HANAYA BOUTIQUE</h2>
+    </div>
+    <div class="hy-collections-grid">
+      <article class="hy-collection">
+        <div class="hy-collection__media"><img src="{{ 'images/hanaya/collection-bonds.jpg' | asset }}" alt="Bonds collection"></div>
+        <div>
+          <div class="hy-collection__name">Bonds</div>
+          <p class="hy-collection__desc">Honouring the strength of connection, loyalty and lasting relationships.</p>
+          <a class="hy-link" href="{{ store.url }}">Explore Bonds</a>
+        </div>
+      </article>
+      <article class="hy-collection">
+        <div class="hy-collection__media"><img src="{{ 'images/hanaya/collection-cornerstone.jpg' | asset }}" alt="Cornerstone collection"></div>
+        <div>
+          <div class="hy-collection__name">Cornerstone</div>
+          <p class="hy-collection__desc">Structured pieces for life's foundational moments.</p>
+          <a class="hy-link" href="{{ store.url }}">Explore Cornerstone</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  {# ═══════════════  Adornments (Hanaya Luxury)  ═══════════════ #}
+  <section class="hy-adorn">
+    <div class="hy-adorn__media"><img src="{{ 'images/hanaya/adornments.jpg' | asset }}" alt="Hanaya Luxury high jewellery"></div>
+    <div class="hy-adorn__body">
+      <div class="hy-adorn__eyebrow">Hanaya Luxury</div>
+      <h2>The high jewellery</h2>
+      <p class="hy-adorn__desc">Unique pieces, one year in the atelier — shown privately in our Riyadh salon, by appointment only.</p>
+      <a class="hy-link" href="{{ store.url }}">Discover Adornments</a>
+    </div>
+  </section>
+
+  {# ═══════════════  The Hanaya promise  ═══════════════ #}
+  <section class="hy-section hy-wrap hy-promise">
+    <div class="hy-head">
+      <div class="hy-eyebrow">The Hanaya promise</div>
+      <h2 class="hy-title hy-title--sm">With every piece, without exception</h2>
+    </div>
+    <div class="hy-promise-grid">
+      <div class="hy-promise-item">
+        <span class="hy-promise-item__mark" aria-hidden="true"></span>
+        <div class="hy-promise-item__title">Exclusive designs</div>
+        <p class="hy-promise-item__desc">A contemporary style with an independent vision</p>
+      </div>
+      <div class="hy-promise-item">
+        <span class="hy-promise-item__mark" aria-hidden="true"></span>
+        <div class="hy-promise-item__title">Certified lab reports</div>
+        <p class="hy-promise-item__desc">An individual report for each piece</p>
+      </div>
+      <div class="hy-promise-item">
+        <span class="hy-promise-item__mark" aria-hidden="true"></span>
+        <div class="hy-promise-item__title">Secure payment</div>
+        <p class="hy-promise-item__desc">Your transactions are fully protected</p>
+      </div>
+      <div class="hy-promise-item">
+        <span class="hy-promise-item__mark" aria-hidden="true"></span>
+        <div class="hy-promise-item__title">Free shipping</div>
+        <p class="hy-promise-item__desc">Across the Kingdom</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script defer src="{{ 'home.js' | asset }}"></script>
+{% endblock %}
