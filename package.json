@@ -37,7 +37,7 @@
     "autoprefixer": "^10.4.21",
     "babel-loader": "^10.0.0",
     "babel-loader-exclude-node-modules-except": "^1.2.4",
-    "copy-webpack-plugin": "^13.0.1",
+    "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^6.5.0",
     "css-minimizer-webpack-plugin": "^7.0.2",
     "glob": "^13.0.6",
