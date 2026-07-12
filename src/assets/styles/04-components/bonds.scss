@@ -1,0 +1,171 @@
+/**
+ * Hanaya — Bonds collection page
+ * Static port of the Hanaya Site v3 "Bonds" screen.
+ * Scoped under `.hanaya-bonds` so nothing leaks into the rest of the theme.
+ * Reuses the same design tokens as the home page (.hanaya-home) but redeclared
+ * locally so the page is self-contained.
+ * Interactivity: 6 design tabs (Trust active + 5 concept extensions) — see bonds.js
+ */
+
+.hanaya-bonds {
+  --ink:        #221D17;
+  --ink-2:      #5B554B;
+  --muted:      #8A8377;
+  --gold:       #9A7B4F;
+  --gold-light: #C5A96B;
+  --gold-line:  #D9CBA8;
+  --paper:      #FAF8F3;
+  --panel:      #F4F0E8;
+  --stone:      #EFEAE0;
+  --line:       #E3DED3;
+  --tab-idle:   #8A8377;
+  --tab-num:    #C2BBAC;
+  --white:      #FDFCF9;
+  --hy-wrap:    1288px;
+  --hy-gutter:  clamp(20px, 6vw, 112px);
+
+  font-family: 'Lama Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 300;
+  line-height: 1.5;
+
+  * { box-sizing: border-box; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; transition: color .2s ease; }
+  a:hover { color: var(--gold); }
+  h1, h2, h3, p { margin: 0; }
+
+  /* ── Hero ── */
+  .b-hero {
+    position: relative;
+    min-height: min(620px, 82vh);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+  .b-hero__img   { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .b-hero__scrim { position: absolute; inset: 0; background: linear-gradient(rgba(24,19,14,.2), rgba(24,19,14,.55) 90%); }
+  .b-hero__content {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center; gap: 19px;
+    padding: 0 var(--hy-gutter) clamp(56px, 9vw, 96px);
+  }
+  .b-hero__eyebrow { font-weight: 500; letter-spacing: .3em; color: #E8D9B8; font-size: 12px; }
+  .b-hero h1 { color: var(--white); font-weight: 300; font-size: clamp(44px, 7vw, 64px); line-height: 1.09; }
+  .b-hero__sub { color: var(--white); font-weight: 300; font-size: clamp(14px, 1.7vw, 16.3px); line-height: 1.7; }
+
+  /* ── Inspiration ── */
+  .b-inspiration {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: 24px;
+    padding: clamp(72px, 11vw, 120px) var(--hy-gutter);
+  }
+  .b-eyebrow { font-weight: 500; letter-spacing: .26em; color: var(--gold); font-size: 11px; }
+  .b-inspiration__lead { font-weight: 300; color: var(--ink); max-width: 880px; line-height: 1.5;
+    font-size: clamp(24px, 3.4vw, 36px); }
+  .b-inspiration__sub { font-weight: 300; color: var(--muted); max-width: 560px; line-height: 1.85;
+    font-size: clamp(13.5px, 1.5vw, 14.3px); }
+
+  /* ── Design tabs ── */
+  .b-tabs {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .b-tabs__track {
+    display: flex; justify-content: center; flex-wrap: wrap;
+    gap: clamp(0px, 1vw, 12px);
+    padding-inline: clamp(8px, 4vw, 112px);
+  }
+  .b-tab {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center; gap: 9px;
+    padding: 20px clamp(14px, 2.4vw, 30px) 24px;
+    background: none; border: 0; cursor: pointer;
+    font-family: inherit;
+  }
+  .b-tab__num   { font-weight: 500; letter-spacing: .2em; color: var(--tab-num); font-size: 9.5px; }
+  .b-tab__name  { font-weight: 400; letter-spacing: .2em; color: var(--tab-idle); font-size: 12.5px; transition: color .2s ease; }
+  .b-tab__underline {
+    position: absolute; left: 26px; right: 26px; bottom: -1px; height: 2px;
+    background: var(--gold); opacity: 0; transition: opacity .25s ease;
+  }
+  .b-tab:hover .b-tab__name { color: var(--ink); }
+  .b-tab.is-active .b-tab__num  { color: var(--gold); }
+  .b-tab.is-active .b-tab__name { font-weight: 500; color: var(--ink); }
+  .b-tab.is-active .b-tab__underline { opacity: 1; }
+
+  /* ── Panels (one per design) ── */
+  .b-panel { display: none; }
+  .b-panel.is-active { display: block; }
+
+  /* Spotlight (split image + text) */
+  .b-spotlight {
+    display: grid;
+    grid-template-columns: 544px 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+    background: var(--panel);
+    padding: clamp(48px, 8vw, 88px) var(--hy-gutter);
+  }
+  .b-spotlight__media { width: 100%; height: 560px; max-height: 62vh; overflow: hidden; }
+  .b-spotlight__media img { width: 100%; height: 100%; object-fit: cover; }
+  .b-spotlight__eyebrow { font-weight: 500; letter-spacing: .3em; color: var(--gold); font-size: 11px; }
+  .b-spotlight h2 { font-weight: 300; color: var(--ink); font-size: clamp(36px, 5vw, 52px); line-height: 1.08; margin-top: 20px; }
+  .b-spotlight__formula { font-weight: 500; letter-spacing: .24em; color: var(--gold); font-size: 11px; margin-top: 22px; }
+  .b-spotlight__desc { font-weight: 300; color: var(--ink-2); max-width: 480px; line-height: 1.85; margin-top: 22px;
+    font-size: clamp(14px, 1.6vw, 15.1px); }
+
+  /* Product row */
+  .b-products {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: clamp(20px, 2.5vw, 32px);
+    padding: clamp(48px, 7vw, 72px) var(--hy-gutter) clamp(72px, 10vw, 106px);
+  }
+  .b-product { display: flex; flex-direction: column; gap: 14px; }
+  .b-product__media { aspect-ratio: 1 / 1.28; background: var(--stone); overflow: hidden; }
+  .b-product__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+  .b-product:hover .b-product__media img { transform: scale(1.04); }
+  .b-product__media--placeholder {
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #F1EDE4, #EAE5D9);
+  }
+  .b-product__media--placeholder span { font-weight: 400; letter-spacing: .06em; color: var(--muted); font-size: 11px; text-align: center; padding: 0 12px; }
+  .b-product__row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .b-product__name  { font-weight: 400; font-size: clamp(16px, 1.8vw, 18px); }
+  .b-product__price { font-weight: 400; font-size: 12.5px; color: var(--ink-2); white-space: nowrap; }
+  .b-product__status { font-weight: 500; letter-spacing: .13em; font-size: 10.5px; }
+  .b-product__status--ready { color: var(--muted); }
+  .b-product__status--made  { color: var(--gold); }
+
+  /* Coming-soon state for the 5 concept designs */
+  .b-soon {
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px;
+    padding: clamp(72px, 12vw, 140px) var(--hy-gutter);
+  }
+  .b-soon__name { font-weight: 300; color: var(--ink); font-size: clamp(34px, 5vw, 52px); }
+  .b-soon__note { font-weight: 300; color: var(--muted); max-width: 460px; line-height: 1.8; font-size: 14px; }
+  .b-soon__tag { font-weight: 500; letter-spacing: .22em; color: var(--gold); border: 1px solid var(--gold-line);
+    padding: 10px 20px; font-size: 10.5px; margin-top: 6px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .b-spotlight { grid-template-columns: 1fr; }
+    .b-spotlight__media { height: clamp(320px, 60vw, 480px); order: -1; }
+    .b-products { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) {
+    .b-products { grid-template-columns: 1fr; max-width: 360px; margin-inline: auto; }
+    .b-tab { padding-inline: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+}
+
+/* RTL: flip the tab underline insets & spotlight order feel */
+[dir="rtl"] .hanaya-bonds .b-spotlight__desc,
+[dir="rtl"] .hanaya-bonds .b-inspiration__lead { text-align: center; }
