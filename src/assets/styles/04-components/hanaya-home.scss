@@ -5,7 +5,17 @@
  * the rest of the Raed theme (header/footer/other pages stay untouched).
  */
 
+/* Lama Sans — the brand typeface used across the Hanaya home page.
+ * Loaded here (not from theme.font) so the design's typography is preserved
+ * regardless of the merchant's chosen store font. */
+@font-face { font-family: 'Lama Sans'; font-style: normal; font-weight: 300; font-display: swap; src: url('https://fonts.cdnfonts.com/s/89696/LamaSans-Light.woff')    format('woff'); }
+@font-face { font-family: 'Lama Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url('https://fonts.cdnfonts.com/s/89696/LamaSans-Regular.woff')  format('woff'); }
+@font-face { font-family: 'Lama Sans'; font-style: normal; font-weight: 500; font-display: swap; src: url('https://fonts.cdnfonts.com/s/89696/LamaSans-Medium.woff')   format('woff'); }
+@font-face { font-family: 'Lama Sans'; font-style: normal; font-weight: 600; font-display: swap; src: url('https://fonts.cdnfonts.com/s/89696/LamaSans-SemiBold.woff') format('woff'); }
+@font-face { font-family: 'Lama Sans'; font-style: normal; font-weight: 700; font-display: swap; src: url('https://fonts.cdnfonts.com/s/89696/LamaSans-Bold.woff')     format('woff'); }
+
 .hanaya-home {
+  font-family: 'Lama Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --ink:        #221D17;
   --ink-2:      #5B554B;
   --muted:      #8A8377;
