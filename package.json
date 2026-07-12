@@ -1,11 +1,11 @@
 {
-  "name": "theme-raed",
-  "version": "1.358.0",
-  "description": "Salla Theme",
+  "name": "hanaya-theme",
+  "version": "1.0.0",
+  "description": "Hanaya jewellery theme",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SallaApp/theme-raed.git"
+    "url": "git+https://github.com/moatez99/han.git"
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
@@ -15,7 +15,7 @@
     "development": "webpack --mode development",
     "watch": "webpack --mode development --watch"
   },
-  "author": "Salla",
+  "author": "Hanaya",
   "dependencies": {
     "@babel/runtime": "^7.28.6",
     "animejs": "^3.2.1",
