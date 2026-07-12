@@ -14,7 +14,8 @@
 {% extends "layouts.master" %}
 
 {% block content %}
-<div class="hanaya-home">
+{# ── Home view (default) ── #}
+<div class="hanaya-home" id="view-home">
 
   {# ═══════════════  Hero  ═══════════════ #}
   <section class="hy-hero">
@@ -97,7 +98,7 @@
         <div>
           <div class="hy-collection__name">Bonds</div>
           <p class="hy-collection__desc">Honouring the strength of connection, loyalty and lasting relationships.</p>
-          <a class="hy-link" href="{{ store.url }}/bonds">Explore Bonds</a>
+          <a class="hy-link" href="{{ store.url }}?page=bonds">Explore Bonds</a>
         </div>
       </article>
       <article class="hy-collection">
@@ -153,8 +154,41 @@
   </section>
 
 </div>
+
+{# ── Bonds view (shown when URL is ?page=bonds or #bonds) ── #}
+{# Salla has no custom /bonds route, so the reachable Bonds page is served
+   here through the home route and toggled client-side by the router below. #}
+<div id="view-bonds" hidden>
+  {% include 'pages.partials.hanaya.bonds-body' %}
+</div>
 {% endblock %}
 
 {% block scripts %}
     <script defer src="{{ 'home.js' | asset }}"></script>
+    <script>
+    /* Home ⇆ Bonds router.
+       Shows the Bonds view when the URL has ?page=bonds (or #bonds), otherwise
+       the home view. Lets "Explore Bonds" link to a reachable URL on the store
+       without a custom Salla route. */
+    (function () {
+      var home  = document.getElementById('view-home');
+      var bonds = document.getElementById('view-bonds');
+      if (!home || !bonds) return;
+
+      function wantsBonds() {
+        var qs = new URLSearchParams(window.location.search);
+        if ((qs.get('page') || '').toLowerCase() === 'bonds') return true;
+        return (window.location.hash || '').toLowerCase().indexOf('bonds') === 1; // '#bonds'
+      }
+      function render() {
+        var b = wantsBonds();
+        bonds.hidden = !b;
+        home.hidden  = b;
+        if (b) window.scrollTo(0, 0);
+      }
+      window.addEventListener('hashchange', render);
+      window.addEventListener('popstate', render);
+      render();
+    })();
+    </script>
 {% endblock %}

@@ -23,7 +23,18 @@ def asset_uri(path_inside_images):
     # {{ 'images/...'|asset }} -> local file uri under src/assets
     return (ROOT / ("src/assets/" + path_inside_images)).as_uri()
 
+def resolve_includes(s):
+    # {% include 'pages.partials.hanaya.bonds-body' %} -> file contents
+    def repl(m):
+        dotted = m.group(1)
+        rel = "src/views/" + dotted.replace(".", "/") + ".twig"
+        p = ROOT / rel
+        return p.read_text(encoding="utf-8") if p.exists() else ""
+    return re.sub(r"\{%\s*include\s*'([^']+)'\s*%\}", repl, s)
+
 def strip_twig(s):
+    # resolve includes first so their twig gets processed too
+    s = resolve_includes(s)
     # comments
     s = re.sub(r"\{#.*?#\}", "", s, flags=re.S)
     # {{ 'images/...'|asset }}

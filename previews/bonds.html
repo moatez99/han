@@ -25,7 +25,7 @@
   <div class="hy-topbar">
     <div class="hy-topbar__inner">
       <nav class="hy-topbar__group" aria-label="Utility">
-        <a href="#/bonds">Our Story</a>
+        <a href="#?page=bonds">Our Story</a>
         <span class="hy-topbar__sep" aria-hidden="true">|</span>
         <a href="#">Privacy Policy</a>
         <span class="hy-topbar__sep" aria-hidden="true">|</span>
@@ -80,6 +80,7 @@
 </header>
 
 <main>
+  
 <div class="hanaya-bonds" id="hanaya-bonds">
 
   
@@ -169,7 +170,6 @@
   </div>
 
   
-  
   <div class="b-panel" id="panel-support" role="tabpanel" aria-labelledby="tab-support">
     <section class="b-soon">
       <div class="b-eyebrow">02 · The design</div>
@@ -212,6 +212,41 @@
   </div>
 
 </div>
+
+<script>
+/* Bonds design-tab switcher — self-contained, no bundler dependency. */
+(function () {
+  var root = document.getElementById('hanaya-bonds');
+  if (!root || root.__bondsInit) return;
+  root.__bondsInit = true;
+  var tabs   = Array.prototype.slice.call(root.querySelectorAll('.b-tab'));
+  var panels = Array.prototype.slice.call(root.querySelectorAll('.b-panel'));
+  if (!tabs.length) return;
+
+  function activate(tab) {
+    if (!tab) return;
+    var panelId = tab.getAttribute('data-panel');
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.classList.toggle('is-active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    panels.forEach(function (p) { p.classList.toggle('is-active', p.id === panelId); });
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { activate(tab); });
+    tab.addEventListener('keydown', function (e) {
+      var dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!dir) return;
+      e.preventDefault();
+      var next = tabs[(i + dir + tabs.length) % tabs.length];
+      next.focus(); activate(next);
+    });
+  });
+})();
+</script>
+
 </main>
 
 <footer class="hy-footer">
@@ -222,7 +257,7 @@
       <h3 class="hy-footer__title">Important Links</h3>
       <nav class="hy-footer__links" aria-label="Footer">
         <a href="#">Boutique</a>
-        <a href="#/bonds">Our Story</a>
+        <a href="#?page=bonds">Our Story</a>
         <a href="#">Customer Care</a>
         <a href="#">Terms &amp; Conditions</a>
         <a href="#">Privacy Policy</a>
@@ -279,56 +314,6 @@
 </footer>
 
 
-
-<script>
-/* Bonds design-tab switcher — self-contained, no bundler dependency.
-   Switches the active tab + panel, updates ARIA, supports keyboard arrows,
-   and reflects the choice in the URL hash (e.g. #support) for deep-linking. */
-(function () {
-  var root = document.getElementById('hanaya-bonds');
-  if (!root) return;
-  var tabs   = Array.prototype.slice.call(root.querySelectorAll('.b-tab'));
-  var panels = Array.prototype.slice.call(root.querySelectorAll('.b-panel'));
-  if (!tabs.length) return;
-
-  function activate(tab, setHash) {
-    if (!tab) return;
-    var panelId = tab.getAttribute('data-panel');
-    tabs.forEach(function (t) {
-      var on = t === tab;
-      t.classList.toggle('is-active', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-    panels.forEach(function (p) {
-      p.classList.toggle('is-active', p.id === panelId);
-    });
-    if (setHash) {
-      var slug = panelId.replace('panel-', '');
-      if (history.replaceState) history.replaceState(null, '', '#' + slug);
-    }
-  }
-
-  tabs.forEach(function (tab, i) {
-    tab.addEventListener('click', function () { activate(tab, true); });
-    tab.addEventListener('keydown', function (e) {
-      var dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if (!dir) return;
-      e.preventDefault();
-      var next = tabs[(i + dir + tabs.length) % tabs.length];
-      next.focus();
-      activate(next, true);
-    });
-  });
-
-  /* Deep-link: open the tab named in the URL hash on load (e.g. /bonds#unity) */
-  var hash = (window.location.hash || '').replace('#', '');
-  if (hash) {
-    var target = tabs.filter(function (t) {
-      return t.getAttribute('data-panel') === 'panel-' + hash;
-    })[0];
-    if (target) activate(target, false);
-  }
-})();
-</script>
+    
 
 </body></html>

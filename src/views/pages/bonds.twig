@@ -1,206 +1,21 @@
 {#
-| Hanaya — Bonds collection page (static port of Hanaya Site v3 "Bonds" screen)
+| Hanaya — Bonds collection page.
 |
-| NOTE ON ROUTING:
-| Salla's page routes are fixed (product/category/cart/single-page); a custom
-| `/bonds` route is not natively addable. This template is a self-contained
-| static page. To surface it on a real store you can either:
-|   (a) paste this markup into a Salla "Single Page" (rendered by page-single.twig), or
-|   (b) map it onto the Bonds category page once a Bonds category exists.
-| The home "Explore Bonds" link points at `{{ store.url }}/bonds` as a placeholder path.
+| NOTE ON ROUTING (important):
+| Salla page routes are FIXED — there is no way to register a custom `/bonds`
+| URL. So the reachable way to open Bonds on a live store is through the HOME
+| route with `?page=bonds` (handled in index.twig). This bonds.twig file is
+| kept as the canonical source and for the standalone preview; the actual body
+| lives in the shared partial below so home and this page never drift.
 |
-| Header & footer come from the Raed master layout.
-| Styles: src/assets/styles/04-components/bonds.scss (scoped to .hanaya-bonds)
-| Interactivity: the 6 design tabs switch panels (see inline script at the bottom).
+| Header & footer come from the master layout. Styles: 04-components/bonds.scss.
 #}
 {% extends "layouts.master" %}
 
 {% block content %}
-<div class="hanaya-bonds" id="hanaya-bonds">
-
-  {# ═══════════════  Hero  ═══════════════ #}
-  <section class="b-hero">
-    <img class="b-hero__img" src="{{ 'images/hanaya/bonds-hero.jpg' | asset }}" alt="" aria-hidden="true">
-    <div class="b-hero__scrim" aria-hidden="true"></div>
-    <div class="b-hero__content">
-      <div class="b-hero__eyebrow">The collection</div>
-      <h1>Bonds</h1>
-      <p class="b-hero__sub">Six designs · Every bond tells a story</p>
-    </div>
-  </section>
-
-  {# ═══════════════  Inspiration  ═══════════════ #}
-  <section class="b-inspiration">
-    <div class="b-eyebrow">The inspiration</div>
-    <p class="b-inspiration__lead">Inspired by the Sinay-tailed lizard of the Saudi desert — the seamless, steady connection of its rings embodying bonds that combine flexibility and strength.</p>
-    <p class="b-inspiration__sub">Six designs, each drawn from a human bond — and within each design, a family of pieces.</p>
-  </section>
-
-  {# ═══════════════  Design tabs  ═══════════════ #}
-  <div class="b-tabs">
-    <div class="b-tabs__track" role="tablist" aria-label="Bonds designs">
-      <button class="b-tab is-active" role="tab" aria-selected="true"  aria-controls="panel-trust"        id="tab-trust"        data-panel="panel-trust">
-        <span class="b-tab__num">01</span><span class="b-tab__name">Trust</span><span class="b-tab__underline" aria-hidden="true"></span>
-      </button>
-      <button class="b-tab" role="tab" aria-selected="false" aria-controls="panel-support"      id="tab-support"      data-panel="panel-support">
-        <span class="b-tab__num">02</span><span class="b-tab__name">Support</span><span class="b-tab__underline" aria-hidden="true"></span>
-      </button>
-      <button class="b-tab" role="tab" aria-selected="false" aria-controls="panel-connection"   id="tab-connection"   data-panel="panel-connection">
-        <span class="b-tab__num">03</span><span class="b-tab__name">Connection</span><span class="b-tab__underline" aria-hidden="true"></span>
-      </button>
-      <button class="b-tab" role="tab" aria-selected="false" aria-controls="panel-appreciation" id="tab-appreciation" data-panel="panel-appreciation">
-        <span class="b-tab__num">04</span><span class="b-tab__name">Appreciation</span><span class="b-tab__underline" aria-hidden="true"></span>
-      </button>
-      <button class="b-tab" role="tab" aria-selected="false" aria-controls="panel-devotion"     id="tab-devotion"     data-panel="panel-devotion">
-        <span class="b-tab__num">05</span><span class="b-tab__name">Devotion</span><span class="b-tab__underline" aria-hidden="true"></span>
-      </button>
-      <button class="b-tab" role="tab" aria-selected="false" aria-controls="panel-unity"        id="tab-unity"        data-panel="panel-unity">
-        <span class="b-tab__num">06</span><span class="b-tab__name">Unity</span><span class="b-tab__underline" aria-hidden="true"></span>
-      </button>
-    </div>
-  </div>
-
-  {# ═══════════════  Panel 01 — Trust (fully designed)  ═══════════════ #}
-  <div class="b-panel is-active" id="panel-trust" role="tabpanel" aria-labelledby="tab-trust">
-    <section class="b-spotlight">
-      <div class="b-spotlight__media"><img src="{{ 'images/hanaya/product-trust-ring.jpg' | asset }}" alt="Bonds Trust"></div>
-      <div class="b-spotlight__body">
-        <div class="b-spotlight__eyebrow">The design</div>
-        <h2>Bonds Trust</h2>
-        <div class="b-spotlight__formula">Stability + Certainty = Trust</div>
-        <p class="b-spotlight__desc">The first designs of the Bonds Collection, where trust arises from connection — embodying a relationship that grows, strengthens, and endures. Four pieces, each crowned with lab-grown diamonds.</p>
-      </div>
-    </section>
-
-    <section class="b-products">
-      <article class="b-product">
-        <div class="b-product__media"><img src="{{ 'images/hanaya/product-trust-pendant.jpg' | asset }}" alt="Trust Pendant"></div>
-        <div>
-          <div class="b-product__row"><span class="b-product__name">Trust Pendant</span><span class="b-product__price">10,000 SAR</span></div>
-          <div class="b-product__status b-product__status--ready">Ready to order</div>
-        </div>
-      </article>
-      <article class="b-product">
-        <div class="b-product__media"><img src="{{ 'images/hanaya/product-trust-ring.jpg' | asset }}" alt="Trust Ring"></div>
-        <div>
-          <div class="b-product__row"><span class="b-product__name">Trust Ring</span><span class="b-product__price">5,000 SAR</span></div>
-          <div class="b-product__status b-product__status--made">Order to make</div>
-        </div>
-      </article>
-      <article class="b-product">
-        <div class="b-product__media b-product__media--placeholder"><span>product shot — in photography</span></div>
-        <div>
-          <div class="b-product__row"><span class="b-product__name">Trust Bracelet</span><span class="b-product__price">7,000 SAR</span></div>
-          <div class="b-product__status b-product__status--made">Order to make</div>
-        </div>
-      </article>
-      <article class="b-product">
-        <div class="b-product__media"><img src="{{ 'images/hanaya/product-trust-earring.jpg' | asset }}" alt="Trust Earring"></div>
-        <div>
-          <div class="b-product__row"><span class="b-product__name">Trust Earring</span><span class="b-product__price">4,000 SAR</span></div>
-          <div class="b-product__status b-product__status--ready">Ready to order</div>
-        </div>
-      </article>
-    </section>
-  </div>
-
-  {# ═══════════════  Panels 02–06 — concept extensions (coming soon)  ═══════════════ #}
-  {# Per the v3 design note: only the Trust design exists today; the other five
-     tabs remain concept extensions. Each shows a tasteful placeholder. #}
-  <div class="b-panel" id="panel-support" role="tabpanel" aria-labelledby="tab-support">
-    <section class="b-soon">
-      <div class="b-eyebrow">02 · The design</div>
-      <div class="b-soon__name">Bonds Support</div>
-      <p class="b-soon__note">Presence + Reliance = Support. A concept extension of the Bonds Collection — pieces in development.</p>
-      <div class="b-soon__tag">Coming soon</div>
-    </section>
-  </div>
-  <div class="b-panel" id="panel-connection" role="tabpanel" aria-labelledby="tab-connection">
-    <section class="b-soon">
-      <div class="b-eyebrow">03 · The design</div>
-      <div class="b-soon__name">Bonds Connection</div>
-      <p class="b-soon__note">Closeness + Continuity = Connection. A concept extension of the Bonds Collection — pieces in development.</p>
-      <div class="b-soon__tag">Coming soon</div>
-    </section>
-  </div>
-  <div class="b-panel" id="panel-appreciation" role="tabpanel" aria-labelledby="tab-appreciation">
-    <section class="b-soon">
-      <div class="b-eyebrow">04 · The design</div>
-      <div class="b-soon__name">Bonds Appreciation</div>
-      <p class="b-soon__note">Gratitude + Recognition = Appreciation. A concept extension of the Bonds Collection — pieces in development.</p>
-      <div class="b-soon__tag">Coming soon</div>
-    </section>
-  </div>
-  <div class="b-panel" id="panel-devotion" role="tabpanel" aria-labelledby="tab-devotion">
-    <section class="b-soon">
-      <div class="b-eyebrow">05 · The design</div>
-      <div class="b-soon__name">Bonds Devotion</div>
-      <p class="b-soon__note">Loyalty + Dedication = Devotion. A concept extension of the Bonds Collection — pieces in development.</p>
-      <div class="b-soon__tag">Coming soon</div>
-    </section>
-  </div>
-  <div class="b-panel" id="panel-unity" role="tabpanel" aria-labelledby="tab-unity">
-    <section class="b-soon">
-      <div class="b-eyebrow">06 · The design</div>
-      <div class="b-soon__name">Bonds Unity</div>
-      <p class="b-soon__note">Togetherness + Harmony = Unity. A concept extension of the Bonds Collection — pieces in development.</p>
-      <div class="b-soon__tag">Coming soon</div>
-    </section>
-  </div>
-
-</div>
+  {% include 'pages.partials.hanaya.bonds-body' %}
 {% endblock %}
 
 {% block scripts %}
-<script defer src="{{ 'home.js' | asset }}"></script>
-<script>
-/* Bonds design-tab switcher — self-contained, no bundler dependency.
-   Switches the active tab + panel, updates ARIA, supports keyboard arrows,
-   and reflects the choice in the URL hash (e.g. #support) for deep-linking. */
-(function () {
-  var root = document.getElementById('hanaya-bonds');
-  if (!root) return;
-  var tabs   = Array.prototype.slice.call(root.querySelectorAll('.b-tab'));
-  var panels = Array.prototype.slice.call(root.querySelectorAll('.b-panel'));
-  if (!tabs.length) return;
-
-  function activate(tab, setHash) {
-    if (!tab) return;
-    var panelId = tab.getAttribute('data-panel');
-    tabs.forEach(function (t) {
-      var on = t === tab;
-      t.classList.toggle('is-active', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-    panels.forEach(function (p) {
-      p.classList.toggle('is-active', p.id === panelId);
-    });
-    if (setHash) {
-      var slug = panelId.replace('panel-', '');
-      if (history.replaceState) history.replaceState(null, '', '#' + slug);
-    }
-  }
-
-  tabs.forEach(function (tab, i) {
-    tab.addEventListener('click', function () { activate(tab, true); });
-    tab.addEventListener('keydown', function (e) {
-      var dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if (!dir) return;
-      e.preventDefault();
-      var next = tabs[(i + dir + tabs.length) % tabs.length];
-      next.focus();
-      activate(next, true);
-    });
-  });
-
-  /* Deep-link: open the tab named in the URL hash on load (e.g. /bonds#unity) */
-  var hash = (window.location.hash || '').replace('#', '');
-  if (hash) {
-    var target = tabs.filter(function (t) {
-      return t.getAttribute('data-panel') === 'panel-' + hash;
-    })[0];
-    if (target) activate(target, false);
-  }
-})();
-</script>
+    <script defer src="{{ 'home.js' | asset }}"></script>
 {% endblock %}
